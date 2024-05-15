@@ -41,9 +41,9 @@ OPTFLAGS += -reconcile-unrealized-casts
 %.ll: %.llvm.mlir
 	$(TRANSLATE) -mlir-to-llvmir -o $@ $<
 
-%.o: %.ll
-	llc -filetype=obj -o $@ $<
+%.s: %.ll
+	llc -filetype=asm -o $@ $<
 
-%.x: %.o
+%: %.ll
 	clang-18 -o $@ $<
 
