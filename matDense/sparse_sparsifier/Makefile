@@ -5,7 +5,10 @@ TRANSLATE = mlir-translate
 OPTFLAGS += 
 
 #Default optimization flags
-OPTFLAGS += -sparsifier
+OPTFLAGS += -canonicalize
+OPTFLAGS += -generate-runtime-verification
+OPTFLAGS += -sparsification
+OPTFLAGS += -sparsifier='enable-runtime-library=true enable-index-optimizations enable-buffer-initialization'
 
 .PRECIOUS: %.llvm.mlir
 .PRECIOUS: %.ll
@@ -17,8 +20,9 @@ OPTFLAGS += -sparsifier
 	$(TRANSLATE) -mlir-to-llvmir -o $@ $<
 
 %.s: %.ll
-	llc -filetype=asm -o $@ $<
+	clang-18 -S -march=riscv64 -Ofast -o $@ $<
 
 %: %.ll
 	clang-18 -o $@ $<
+
 
