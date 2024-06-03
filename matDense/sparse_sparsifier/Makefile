@@ -20,7 +20,7 @@ OPTFLAGS += -sparsifier='enable-runtime-library=true enable-index-optimizations 
 	$(TRANSLATE) -mlir-to-llvmir -o $@ $<
 
 %.s: %.ll
-	clang-18 -S -march=riscv64 -Ofast -o $@ $<
+	clang-18 -S -target riscv64 -Ofast -o $@ $<
 
 %: %.ll
 	clang-18 -o $@ $<
