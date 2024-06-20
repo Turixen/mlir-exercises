@@ -1,0 +1,32 @@
+I file pass_pipeline sono generati da input_Pass_Pipeline.txt
+
+
+SPARSIFIER
+mlir-opt 
+    -linalg-generalize-named-ops 
+    -linalg-fuse-elementwise-ops 
+    -sparsification-and-bufferization 
+    -sparse-storage-specifier-to-llvm 
+    -canonicalize 
+    -finalizing-bufferize 
+    -sparse-gpu-codegen 
+    -convert-linalg-to-loops 
+    -convert-vector-to-scf
+     -expand-realloc 
+     -convert-scf-to-cf 
+     -expand-strided-metadata 
+     -lower-affine 
+     -convert-vector-to-llvm 
+     -finalize-memref-to-llvm 
+     -convert-complex-to-standard 
+     -arith-expand 
+     -convert-math-to-llvm 
+     -convert-math-to-libm 
+     -convert-complex-to-libm 
+     -convert-vector-to-llvm 
+     -convert-complex-to-llvm 
+     -convert-vector-to-llvm 
+     -convert-func-to-llvm 
+     -reconcile-unrealized-casts sparse.mlir
+
+-print-after-all
