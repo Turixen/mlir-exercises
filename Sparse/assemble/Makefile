@@ -5,7 +5,10 @@ TRANSLATE = mlir-translate
 OPTFLAGS += 
 
 #Default optimization flags
-OPTFLAGS += -sparsifier
+OPTFLAGS += -sparsification-and-bufferization
+OPTFLAGS += -sparse-tensor-codegen
+OPTFLAGS += -sparse-storage-specifier-to-llvm
+
 
 .PRECIOUS: %.llvm.mlir
 .PRECIOUS: %.ll
