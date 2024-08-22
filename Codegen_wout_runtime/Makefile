@@ -49,8 +49,8 @@ OPTFLAGS += -reconcile-unrealized-casts
 	$(TRANSLATE) -mlir-to-llvmir -o $@ $<
 
 %.s: %.ll
-	clang -S -target riscv64 -Ofast -o $@ $<
+	clang -target riscv64 -S -march=rv64imafdc -mabi=lp64d -o $@ $<
 
 %: %.ll
-	clang -o $@ $<
+	clang -target riscv64 -march=rv64imafdc -mabi=lp64d -o $@ $<
 
