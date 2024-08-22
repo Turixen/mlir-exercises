@@ -1,5 +1,5 @@
-OPT = mlir-opt
-TRANSLATE = mlir-translate
+OPT = /opt/share/milkv/llvm-18.1.8/bin/mlir-opt
+TRANSLATE = /opt/share/milkv/llvm-18.1.8/bin/mlir-translate
 
 #Allow specifying additional flags before the default flags
 OPTFLAGS += 
@@ -48,9 +48,9 @@ OPTFLAGS += -reconcile-unrealized-casts
 %.ll: %.llvm.mlir
 	$(TRANSLATE) -mlir-to-llvmir -o $@ $<
 
-%.s: %.ll
-	clang -target riscv64 -S -march=rv64imafdc -mabi=lp64d -o $@ $<
+%.S: %.ll
+	/opt/share/milkv/llvm-18.1.8/bin/clang -target riscv64 -S -march=rv64imafdc -mabi=lp64d -o $@ $<
 
-%: %.ll
-	clang -target riscv64 -march=rv64imafdc -mabi=lp64d -o $@ $<
+%: %.S
+	/opt/share/milkv/llvm-18.1.8/bin/clang -target riscv64 -march=rv64imafdc -mabi=lp64d -L/opt/share/milkv/llvm-18.1.8/lib/clang/18/lib/riscv64-unknown-linux-gnu/ -L/usr/lib64 -lc -lm -v $@ $<
 
