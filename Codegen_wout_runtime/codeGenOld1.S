@@ -237,9 +237,8 @@ main:                                   # @main
 	li	s7, 3
 	sd	s7, 128(t0)
 	sd	s6, 120(t0)
-.Lpcrel_hi0:
-	auipc	s6, %pcrel_hi(.L__constant_3x2xf64)
-	addi	s6, s6, %pcrel_lo(.Lpcrel_hi0)
+	lui	s6, %hi(.L__constant_3x2xf64)
+	addi	s6, s6, %lo(.L__constant_3x2xf64)
 	sd	s6, 112(t0)
 	lui	s6, 228023
 	slli	s6, s6, 2
@@ -286,19 +285,16 @@ test_assemble:                          # @test_assemble
 	.cfi_startproc
 # %bb.0:
 	mv	a1, a0
-.Lpcrel_hi1:
-	auipc	a0, %pcrel_hi(.L__constant_4xindex_0)
-	addi	a3, a0, %pcrel_lo(.Lpcrel_hi1)
-	lwu	a2, 24(a3)
-	lwu	a0, 28(a3)
+	lui	a2, %hi(.L__constant_4xindex_0)
+	lwu	a3, %lo(.L__constant_4xindex_0+24)(a2)
+	lwu	a0, %lo(.L__constant_4xindex_0+28)(a2)
 	slli	a0, a0, 32
-	or	a0, a0, a2
-.Lpcrel_hi2:
-	auipc	a2, %pcrel_hi(.L__constant_4xindex)
-	addi	a7, a2, %pcrel_lo(.Lpcrel_hi2)
-.Lpcrel_hi3:
-	auipc	a2, %pcrel_hi(.L__constant_4xf64)
-	addi	a2, a2, %pcrel_lo(.Lpcrel_hi3)
+	or	a0, a0, a3
+	addi	a3, a2, %lo(.L__constant_4xindex_0)
+	lui	a2, %hi(.L__constant_4xindex)
+	addi	a7, a2, %lo(.L__constant_4xindex)
+	lui	a2, %hi(.L__constant_4xf64)
+	addi	a2, a2, %lo(.L__constant_4xf64)
 	li	a5, 4
 	sd	a5, 136(a1)
 	sd	a5, 128(a1)

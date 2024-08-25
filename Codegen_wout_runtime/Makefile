@@ -38,7 +38,6 @@ OPTFLAGS += -convert-vector-to-llvm
 OPTFLAGS += -convert-func-to-llvm
 OPTFLAGS += -reconcile-unrealized-casts
 
-
 .PRECIOUS: %.llvm.mlir
 .PRECIOUS: %.ll
 
@@ -49,8 +48,8 @@ OPTFLAGS += -reconcile-unrealized-casts
 	$(TRANSLATE) -mlir-to-llvmir -o $@ $<
 
 %.S: %.ll
-	/opt/share/milkv/llvm-18.1.8/bin/clang -target riscv64 -S -march=rv64imafdc -mabi=lp64d -o $@ $<
+	/opt/share/milkv/llvm-18.1.8/bin/clang -S -march=rv64imafdc -mabi=lp64d -o $@ $<
 
 %: %.S
-	/opt/share/milkv/llvm-18.1.8/bin/clang -target riscv64 -march=rv64imafdc -mabi=lp64d -L/opt/share/milkv/llvm-18.1.8/lib/clang/18/lib/riscv64-unknown-linux-gnu/ -L/usr/lib64 -lc -lm -v $@ $<
+	/opt/share/milkv/llvm-18.1.8/bin/clang -march=rv64imafdc -mabi=lp64d -L/opt/share/milkv/llvm-18.1.8/lib/clang/18/lib/riscv64-unknown-linux-gnu/ -L/usr/lib64 -L/usr/lib/gcc/riscv64-redhat-linux/13/ -v -o $@ $<
 
